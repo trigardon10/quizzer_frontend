@@ -1,0 +1,24 @@
+
+    <div>
+<mat-form-field>
+    <mat-label>Benutzername</mat-label>
+  <input matInput [(ngModel)]="newUser.username" [disabled]="saveInProgress">
+</mat-form-field>
+</div>
+<div>
+<mat-form-field>
+    <mat-label>Passwort</mat-label>
+  <input matInput [(ngModel)]="newUser.password" [disabled]="saveInProgress">
+</mat-form-field>
+</div>
+<div>
+<mat-form-field>
+    <mat-label>Rolle</mat-label>
+  <mat-select [(ngModel)]="newUser.role">
+    <mat-option [value]="roles.ADMIN">Admin</mat-option>
+    <mat-option [value]="roles.STUDENT">Schüler</mat-option>
+    <mat-option [value]="roles.TEACHER">Lehrer</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+<button mat-button [disabled]="!newUser.username || !newUser.password || saveInProgress" (click)="saveUser()">Speichern</button>
