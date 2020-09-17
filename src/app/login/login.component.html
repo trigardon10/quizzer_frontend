@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <div><img src="assets/logo.png" /></div>
+    <div>
+      <mat-form-field>
+        <mat-label>Benutzername</mat-label>
+        <input matInput [(ngModel)]="username" [disabled]="loginInProgress" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Passwort</mat-label>
+        <input
+          matInput
+          [(ngModel)]="password"
+          [disabled]="loginInProgress"
+          type="password"
+        />
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end">
+      <button mat-button (click)="login()" [disabled]="loginInProgress">
+        Einloggen
+      </button>
+    </div>
+  </mat-card>
+</div>

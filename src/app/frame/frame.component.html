@@ -1,6 +1,12 @@
 <div>
-    <a mat-button [routerLink]="['/users']" routerLinkActive="active-link">User</a>
-    <a mat-button [routerLink]="['/quiz']" routerLinkActive="active-link">Quiz</a>
-    <a mat-button [routerLink]="['/entries']" routerLinkActive="active-link">Einträge</a>
+  <a mat-button [routerLink]="['./users']" routerLinkActive="active-link">
+    User
+  </a>
+  <a mat-button [routerLink]="['./quiz']" routerLinkActive="active-link">
+    Quiz
+  </a>
+  <a mat-button [routerLink]="['./entries']" routerLinkActive="active-link">
+    Einträge
+  </a>
 </div>
 <router-outlet></router-outlet>

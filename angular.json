@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "quizzer-frontend"
+  "defaultProject": "quizzer-frontend",
+  "cli": {
+    "analytics": "966805e4-c0a6-4326-b6b5-e30a8f159bbd"
+  }
 }

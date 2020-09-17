@@ -9,12 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EntryComponent } from './entry/entry.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { LoginComponent } from './login/login.component';
 import { FrameComponent } from './frame/frame.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,7 @@ import { FrameComponent } from './frame/frame.component';
     EntryComponent,
     QuizComponent,
     LoginComponent,
-    FrameComponent
+    FrameComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +37,12 @@ import { FrameComponent } from './frame/frame.component';
     MatFormFieldModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MatTableModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
