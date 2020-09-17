@@ -1,33 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpService {
+  private prefix = 'http://localhost:3000/';
 
-  private prefix = 'http://localhost:3000/'
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
+  put<T>(path: string, body: any): Observable<T> {
+    return this.httpClient.put<T>(this.prefix + path, body, {
+      headers: this.buildHeaders(),
+    });
+  }
 
-  put(path: string, body: any) {
-    return this.httpClient.put(this.prefix + path, body, {headers: this.buildHeaders()})
+  post<T>(path: string, body: any): Observable<T> {
+    return this.httpClient.post<T>(this.prefix + path, body, {
+      headers: this.buildHeaders(),
+    });
   }
-  
-  post(path: string, body: any) {
-    return this.httpClient.post(this.prefix + path, body, {headers: this.buildHeaders()})
+
+  get<T>(path: string, body: any): Observable<T> {
+    return this.httpClient.get<T>(this.prefix + path, {
+      headers: this.buildHeaders(),
+    });
   }
-  
-  get(path: string, body: any) {
-    return this.httpClient.get(this.prefix + path, {headers: this.buildHeaders()})
-  }
-  
-  delete(path: string, body: any) {
-    return this.httpClient.delete(this.prefix + path, {headers: this.buildHeaders()})
+
+  delete<T>(path: string, body: any): Observable<T> {
+    return this.httpClient.delete<T>(this.prefix + path, {
+      headers: this.buildHeaders(),
+    });
   }
 
   private buildHeaders(): Record<string, string> {
     return {};
   }
-  
 }

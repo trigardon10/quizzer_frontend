@@ -30,6 +30,10 @@ export class SessionService {
     const currentUser = this.getCurrentUser();
     return currentUser.role === USERROLE.ADMIN ? 'app/users' : 'app/entries';
   }
+
+  addUser(user: User): void {
+    this.appData.users[user.id] = user;
+  }
 }
 
 export interface AppDataDao {

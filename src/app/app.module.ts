@@ -18,6 +18,8 @@ import { FrameComponent } from './frame/frame.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { MatTableModule } from '@angular/material/table';
     FlexLayoutModule,
     MatCardModule,
     MatTableModule,
+    MatSortModule,
+    CdkTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

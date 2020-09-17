@@ -3,7 +3,7 @@ import { USERROLE } from './entity/UserRole';
 import { HttpService } from '../common/http.service';
 import { SessionService } from '../common/session.service';
 import { User } from './entity/User';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
@@ -23,10 +23,11 @@ export class UserComponent implements OnInit, AfterViewInit {
   saveInProgress = false;
 
   users: User[];
-  displayedColumns: string[] = ['name', 'role'];
-  dataSource: MatTableDataSource<User>;
+  displayedColumns: string[] = ['id', 'name', 'role'];
+  dataSource: User[] = [{ id: 1, name: 'abc', role: 2 }]; // : MatTableDataSource<User>;
 
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<User>;
 
   constructor(
     private http: HttpService,
@@ -34,23 +35,25 @@ export class UserComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.users = this.sessionService.getUsers();
-    this.dataSource = new MatTableDataSource(this.users);
+    // this.users = this.sessionService.getUsers();
+    // this.dataSource = new MatTableDataSource(this.users);
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
+    this.table.renderRows();
   }
 
   saveUser(): void {
     this.saveInProgress = true;
-    this.http.post('user', this.newUser).subscribe(
+    this.http.post<User>('user', this.newUser).subscribe(
       (user: User) => {
         this.newUser = {
           username: '',
           password: '',
           role: USERROLE.STUDENT,
         };
+        this.sessionService.addUser(user);
         this.users.unshift(user);
         this.saveInProgress = false;
       },

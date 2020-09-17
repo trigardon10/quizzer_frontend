@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <div>
     <mat-form-field>
       <mat-label>Benutzername</mat-label>
@@ -36,21 +36,27 @@
   >
     Speichern
   </button>
-</mat-card>
+</mat-card> -->
+<!-- <div>{{ dataSource.length }}</div> -->
+<table [dataSource]="dataSource" mat-table>
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
 
-<table mat-table [dataSource]="dataSource" matSort>
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Benutzername</th>
+    <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
   <!-- Role Column -->
   <ng-container matColumnDef="role">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rolle</th>
-    <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    <th mat-header-cell *matHeaderCellDef>Rolle</th>
+    <td mat-cell *matCellDef="let element">{{ element.role }}</td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 </table>
