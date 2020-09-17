@@ -23,10 +23,11 @@ export class UserComponent implements OnInit, AfterViewInit {
   saveInProgress = false;
 
   users: User[];
-  displayedColumns: string[] = ['id', 'name', 'role'];
-  dataSource: User[] = [{ id: 1, name: 'abc', role: 2 }]; // : MatTableDataSource<User>;
+  currentUser: User;
+  displayedColumns: string[] = ['name', 'role', 'delete'];
+  dataSource: MatTableDataSource<User>;
 
-  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<User>;
 
   constructor(
@@ -35,13 +36,37 @@ export class UserComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // this.users = this.sessionService.getUsers();
-    // this.dataSource = new MatTableDataSource(this.users);
+    this.currentUser = this.sessionService.getCurrentUser();
+    this.users = this.sessionService.getUsers();
+    this.dataSource = new MatTableDataSource(this.users);
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.sort = this.sort;
-    this.table.renderRows();
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, headerId) => {
+      if (headerId === 'name') {
+        return data.name.toLocaleLowerCase().trim();
+      }
+      return data[headerId];
+    };
+  }
+
+  getRoleName(role: USERROLE): string {
+    let rolename: string;
+
+    switch (role) {
+      case USERROLE.ADMIN:
+        rolename = 'Administrator';
+        break;
+      case USERROLE.TEACHER:
+        rolename = 'Lehrer';
+        break;
+      default:
+        rolename = 'Schüler';
+        break;
+    }
+
+    return rolename;
   }
 
   saveUser(): void {
@@ -55,11 +80,28 @@ export class UserComponent implements OnInit, AfterViewInit {
         };
         this.sessionService.addUser(user);
         this.users.unshift(user);
+        this.dataSource.data = this.users;
+        this.table.renderRows();
         this.saveInProgress = false;
       },
       (err) => {
         // TODO: Show Error
         this.saveInProgress = false;
+        console.error(err);
+      }
+    );
+  }
+
+  deleteUser(id: number): void {
+    this.http.delete(`user/${id}`, {}).subscribe(
+      () => {
+        this.sessionService.removeUser(id);
+        this.users = this.sessionService.getUsers();
+        this.dataSource.data = this.users;
+        this.table.renderRows();
+      },
+      (err) => {
+        // TODO: Show Error
         console.error(err);
       }
     );

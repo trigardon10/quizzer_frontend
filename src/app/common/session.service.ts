@@ -19,7 +19,11 @@ export class SessionService {
   }
 
   getUsers(): User[] {
-    return Object.values(this.appData?.users);
+    if (this.appData?.users) {
+      return Object.values(this.appData?.users);
+    }
+    console.warn('no userdata found!');
+    return [];
   }
 
   getCurrentUser(): User {
@@ -33,6 +37,10 @@ export class SessionService {
 
   addUser(user: User): void {
     this.appData.users[user.id] = user;
+  }
+
+  removeUser(id: number): void {
+    delete this.appData.users[id];
   }
 }
 

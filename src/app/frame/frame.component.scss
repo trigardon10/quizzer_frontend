@@ -1,4 +1,14 @@
 a.active-link {
-    background-color: #505060;
-    color: white;
+  background-color: #505060;
+  color: white;
+}
+
+mat-sidenav {
+  width: 200px;
+  max-width: 200px;
+
+  img {
+    max-width: 100%;
+    margin: auto;
+  }
 }

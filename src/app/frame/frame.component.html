@@ -1,12 +1,19 @@
-<div>
-  <a mat-button [routerLink]="['./users']" routerLinkActive="active-link">
-    User
-  </a>
-  <a mat-button [routerLink]="['./quiz']" routerLinkActive="active-link">
-    Quiz
-  </a>
-  <a mat-button [routerLink]="['./entries']" routerLinkActive="active-link">
-    Einträge
-  </a>
-</div>
-<router-outlet></router-outlet>
+<mat-sidenav-container fxFill>
+  <mat-sidenav mode="side" opened>
+    <div fxLayout="column">
+      <div><img src="assets/logo.png" /></div>
+      <a mat-button [routerLink]="['./users']" routerLinkActive="active-link">
+        Benutzer
+      </a>
+      <a mat-button [routerLink]="['./quiz']" routerLinkActive="active-link">
+        Quiz
+      </a>
+      <a mat-button [routerLink]="['./entries']" routerLinkActive="active-link">
+        Einträge
+      </a>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

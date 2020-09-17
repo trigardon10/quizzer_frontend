@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatTableModule,
     MatSortModule,
     CdkTableModule,
+    MatSidenavModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
