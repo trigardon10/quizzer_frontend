@@ -14,6 +14,10 @@ export class SessionService {
     this.appData = appData;
   }
 
+  hasData(): boolean {
+    return !!this.appData;
+  }
+
   getToken(): string {
     return this.appData?.token;
   }

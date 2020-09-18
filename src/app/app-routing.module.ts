@@ -5,6 +5,7 @@ import { EntryComponent } from './entry/entry.component';
 import { LoginComponent } from './login/login.component';
 import { FrameComponent } from './frame/frame.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { AppGuard } from './common/app.guard'
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: FrameComponent,
+    canActivate: [AppGuard],
     children: [
       {
         path: '',
