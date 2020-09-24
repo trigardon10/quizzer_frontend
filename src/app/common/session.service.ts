@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Category } from '../entry/entities/Category';
+import { Entry } from '../entry/entities/Entry';
 import { User } from '../user/entity/User';
 import { USERROLE } from '../user/entity/UserRole';
 
@@ -30,6 +32,22 @@ export class SessionService {
     return [];
   }
 
+  getUsersAsMap(): Record<number, User> {
+    return this.appData?.users || {}
+  }
+
+  getEntries(): Entry[] {
+    if (this.appData?.entries) {
+      return Object.values(this.appData?.entries);
+    }
+    console.warn('no entrydata found!');
+    return [];
+  }
+
+  getCategoriesAsMap(): Record<number, Category> {
+    return this.appData?.categories || {}
+  }
+
   getCurrentUser(): User {
     return this.appData?.users[this.appData.currentUser];
   }
@@ -46,10 +64,16 @@ export class SessionService {
   removeUser(id: number): void {
     delete this.appData.users[id];
   }
+
+  addEntry(entry: Entry): void {
+    this.appData.entries[entry.id] = entry;
+  }
 }
 
 export interface AppDataDao {
   users: Record<number, User>;
   token: string;
   currentUser: number;
+  entries: Record<number, Entry>;
+  categories: Record<number, Category>;
 }

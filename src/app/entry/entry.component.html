@@ -1,1 +1,108 @@
-<p>entry works!</p>
+<mat-card class="mat-elevation-z2">
+    <div>
+      <h2>Neuen Eintrag anlegen</h2>
+      <mat-form-field>
+        <mat-label>Frage</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newEntry.question"
+          [disabled]="saveInProgress"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Hinweis</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newEntry.hint"
+          [disabled]="saveInProgress"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Antwort</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="newEntry.answer"
+          [disabled]="saveInProgress"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <button
+      mat-button
+      (click)="saveEntry()"
+      [disabled]="!newEntry.question || !newEntry.hint || !newEntry.answer || saveInProgress"
+    >
+      Speichern
+    </button>
+  </mat-card>
+  
+  <table [dataSource]="dataSource" mat-table matSort class="mat-elevation-z2">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+  
+    <!-- Question Column -->
+    <ng-container matColumnDef="question">
+      <th mat-header-cell *matHeaderCellDef>Frage</th>
+      <td mat-cell *matCellDef="let element">{{ element.question }}</td>
+    </ng-container>
+  
+    <!-- Hint Column -->
+    <ng-container matColumnDef="hint">
+      <th mat-header-cell *matHeaderCellDef>Hinweis</th>
+      <td mat-cell *matCellDef="let element">{{ element.hint }}</td>
+    </ng-container>
+
+    <!-- Answer Column -->
+    <ng-container matColumnDef="answer">
+        <th mat-header-cell *matHeaderCellDef>Antwort</th>
+        <td mat-cell *matCellDef="let element">{{ element.answer }}</td>
+      </ng-container>
+
+      <!-- Answer Column -->
+      <ng-container matColumnDef="creator">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ersteller</th>
+          <td mat-cell *matCellDef="let element">{{ users[element.creatorId]?.name }}</td>
+        </ng-container>
+
+        <!-- Answer Column -->
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Kategorie</th>
+            <td mat-cell *matCellDef="let element">{{ categories[element.categoryId]?.name }}</td>
+          </ng-container>
+  
+    <!-- Edit Column TODO -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (click)="element.id !== currentUser.id && deleteUser(element.id)"
+        [class.clickable]="element.id !== currentUser.id"
+      >
+        {{ element.id !== currentUser.id ? "❌" : "" }}
+      </td>
+    </ng-container>
+  
+    <!-- Delete Column TODO -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        (click)="element.id !== currentUser.id && deleteUser(element.id)"
+        [class.clickable]="element.id !== currentUser.id"
+      >
+        {{ element.id !== currentUser.id ? "❌" : "" }}
+      </td>
+    </ng-container>
+  
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+  </table>
+  
