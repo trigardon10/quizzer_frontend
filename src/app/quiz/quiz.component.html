@@ -1,1 +1,102 @@
-<p>quiz works!</p>
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="mat-elevation-z2 start" *ngIf="state === 0">
+    <h2>Quiz</h2>
+    <p>
+      Prüfe dich selbst mit einer Auswahl von bis zu zehn Fragen aus zufälligen
+      Kategorien.
+    </p>
+    <div>
+      <button mat-button (click)="start()">Start</button>
+    </div>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z2 questions" *ngIf="state === 1">
+    <div *ngFor="let entry of entries; let i = index">
+      <div *ngIf="currentEntry === i">
+        <h2>Question {{ i }}</h2>
+        <p>
+          {{ entry.question }}
+          <br />
+          <span class="sub"
+            >Frage erstellt von {{ users[entry.creatorId]?.name }}</span
+          >
+        </p>
+        <div class="animated" [class.revealed]="hintRevealed[entry.id]">
+          <h2>Hinweis</h2>
+          <p>{{ entry.hint }}</p>
+        </div>
+        <div class="animated" [class.revealed]="answerRevealed[entry.id]">
+          <h2>Antwort</h2>
+          <p>{{ entry.answer }}</p>
+        </div>
+        <div *ngIf="!answerRevealed[entry.id]">
+          <button
+            *ngIf="!hintRevealed[entry.id]"
+            mat-button
+            (click)="hintRevealed[entry.id] = true"
+          >
+            Hinweis Zeigen
+          </button>
+          <button
+            *ngIf="hintRevealed[entry.id]"
+            mat-button
+            (click)="hintRevealed[entry.id] = false"
+          >
+            Hinweis Verstecken
+          </button>
+          <button mat-button (click)="answerRevealed[entry.id] = true">
+            Antwort Zeigen
+          </button>
+        </div>
+        <div *ngIf="answerRevealed[entry.id]">
+          <p>Bewerte deine Antwort</p>
+          <mat-slider
+            thumbLabel
+            min="1"
+            max="10"
+            step="1"
+            [(ngModel)]="results[entry.id]"
+          ></mat-slider>
+          <button
+            mat-button
+            (click)="continue()"
+            [disabled]="!results[entry.id]"
+          >
+            Weiter
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z2 results" *ngIf="state === 2">
+    <h2>Resultat</h2>
+    <p>Hier ist das Resultat des Quizzes</p>
+    <table mat-table [dataSource]="entries">
+      <!-- Name Column -->
+      <ng-container matColumnDef="question">
+        <th mat-header-cell *matHeaderCellDef>Frage</th>
+        <td mat-cell *matCellDef="let element">{{ element.question }}</td>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef>Resultat</th>
+        <td mat-cell *matCellDef="let element">
+          {{ results[element.id] }}
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="['question', 'result']" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: ['question', 'result']" mat-row></tr>
+    </table>
+    <div>
+      <button mat-button (click)="again()">Nochmal</button>
+    </div>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z2 results" *ngIf="state === 3">
+    <h2>Quiz kann nicht erstellt werden</h2>
+    <p>Keine Fragen für das Quiz gefunden</p>
+  </mat-card>
+</div>

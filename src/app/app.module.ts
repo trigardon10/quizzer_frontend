@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSortModule,
     CdkTableModule,
     MatSidenavModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

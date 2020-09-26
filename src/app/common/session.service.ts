@@ -33,7 +33,7 @@ export class SessionService {
   }
 
   getUsersAsMap(): Record<number, User> {
-    return this.appData?.users || {}
+    return this.appData?.users || {};
   }
 
   getEntries(): Entry[] {
@@ -45,7 +45,7 @@ export class SessionService {
   }
 
   getCategoriesAsMap(): Record<number, Category> {
-    return this.appData?.categories || {}
+    return this.appData?.categories || {};
   }
 
   getCurrentUser(): User {
@@ -67,6 +67,20 @@ export class SessionService {
 
   addEntry(entry: Entry): void {
     this.appData.entries[entry.id] = entry;
+  }
+
+  getEntriesForQuiz(amount: number): Entry[] {
+    let entries = this.getEntries();
+    // Shuffle
+    entries = entries.sort(() => Math.random() - 0.5);
+    entries = entries.sort((a, b) => {
+      const aValue = a.result && a.result > 7 ? 1 : 0;
+      const bValue = b.result && b.result > 7 ? 1 : 0;
+      return aValue - bValue;
+    });
+    entries = entries.slice(0, amount);
+    // Shuffle again
+    return entries.sort(() => Math.random() - 0.5);
   }
 }
 
