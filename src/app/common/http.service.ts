@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class HttpService {
   private prefix = 'http://localhost:3000/';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
 
   put<T>(path: string, body: any): Observable<T> {
     return this.httpClient.put<T>(this.prefix + path, body, {
@@ -35,6 +36,6 @@ export class HttpService {
   }
 
   private buildHeaders(): Record<string, string> {
-    return {};
+    return {authorization: this.sessionService.getToken() || ""};
   }
 }
