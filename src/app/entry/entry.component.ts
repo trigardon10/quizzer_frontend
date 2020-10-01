@@ -51,7 +51,7 @@ export class EntryComponent implements OnInit {
       if (headerId === 'creator') {
         return this.users[data.creatorId].name.toLocaleLowerCase().trim();
       } else if (headerId === 'category') {
-        return this.categories[data.categoryId].name.toLocaleLowerCase().trim();
+        return data.categoryId ? this.categories[data.categoryId].name.toLocaleLowerCase().trim() : "";
       }
       return data[headerId];
     };
