@@ -20,14 +20,14 @@ export class EntryComponent implements OnInit {
   categories: Record<number, Category>;
   users: Record<number, User>;
   currentUser: User;
-  displayedColumns: string[] = ['question', 'hint', 'answer', 'creator', 'category'];
+  displayedColumns: string[] = ['question', 'hint', 'answer', 'creator', 'category', 'result'];
   dataSource: MatTableDataSource<Entry>;
 
   newEntry = {
-          question: '',
-          hint: '',
-          answer: '',
-        };
+    question: '',
+    hint: '',
+    answer: '',
+  };
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<User>;

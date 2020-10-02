@@ -5,5 +5,5 @@ export interface Entry {
     question: string;
     hint: string;
     answer: string;
-    result?: any; // TODO
+    result?: number;
   }

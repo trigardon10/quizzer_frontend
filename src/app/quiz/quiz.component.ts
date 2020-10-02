@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpService } from '../common/http.service';
 import { SessionService } from '../common/session.service';
 import { Entry } from '../entry/entities/Entry';
 import { User } from '../user/entity/User';
@@ -28,7 +29,7 @@ export class QuizComponent implements OnInit {
   state = 0;
   currentEntry = 0;
 
-  constructor(private sessionService: SessionService, private router: Router) {}
+  constructor(private sessionService: SessionService, private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.entries = this.sessionService.getEntriesForQuiz(10);
@@ -47,7 +48,8 @@ export class QuizComponent implements OnInit {
     if (this.currentEntry >= this.entries.length) {
       this.state = 2;
 
-      // TODO Send to Server
+      this.httpService.post('results', this.results).subscribe();
+      this.entries.forEach(entry => entry.result = this.results[entry.id])
     }
   }
 
