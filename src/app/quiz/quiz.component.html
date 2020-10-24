@@ -13,7 +13,7 @@
   <mat-card class="mat-elevation-z2 questions" *ngIf="state === 1">
     <div *ngFor="let entry of entries; let i = index">
       <div *ngIf="currentEntry === i">
-        <h2>Question {{ i }}</h2>
+        <h2>Frage {{ i + 1 }}</h2>
         <p>
           {{ entry.question }}
           <br />
@@ -49,7 +49,7 @@
           </button>
         </div>
         <div *ngIf="answerRevealed[entry.id]">
-          <p>Bewerte deine Antwort</p>
+          <h2>Bewerte deine Antwort</h2>
           <mat-slider
             thumbLabel
             min="1"

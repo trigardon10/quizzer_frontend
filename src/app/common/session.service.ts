@@ -36,6 +36,14 @@ export class SessionService {
     return this.appData?.users || {};
   }
 
+  getEntry(id: number): Entry {
+    if (this.appData?.entries) {
+      return this.appData?.entries[id];
+    }
+    console.warn('no entrydata found!');
+    return null;
+  }
+
   getEntries(): Entry[] {
     if (this.appData?.entries) {
       return Object.values(this.appData?.entries);
@@ -67,6 +75,10 @@ export class SessionService {
 
   addEntry(entry: Entry): void {
     this.appData.entries[entry.id] = entry;
+  }
+
+  removeEntry(id: number): void {
+    delete this.appData.entries[id];
   }
 
   getEntriesForQuiz(amount: number): Entry[] {

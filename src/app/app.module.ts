@@ -22,6 +22,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditEntryComponent } from './common/dialogs/edit-entry/edit-entry.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { MatSliderModule } from '@angular/material/slider';
     QuizComponent,
     LoginComponent,
     FrameComponent,
+    EditEntryComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { MatSliderModule } from '@angular/material/slider';
     CdkTableModule,
     MatSidenavModule,
     MatSliderModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

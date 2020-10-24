@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { HttpService } from '../common/http.service';
 import { SessionService } from '../common/session.service';
+import { DialogService } from '../common/dialog.service';
 import { User } from '../user/entity/User';
 import { Entry } from './entities/Entry';
 import { Category } from './entities/Category';
@@ -10,17 +11,25 @@ import { Category } from './entities/Category';
 @Component({
   selector: 'app-entry',
   templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+  styleUrls: ['./entry.component.scss'],
 })
-export class EntryComponent implements OnInit {
-
+export class EntryComponent implements OnInit, AfterViewInit {
   saveInProgress = false;
 
   entries: Entry[];
   categories: Record<number, Category>;
   users: Record<number, User>;
   currentUser: User;
-  displayedColumns: string[] = ['question', 'hint', 'answer', 'creator', 'category', 'result'];
+  displayedColumns: string[] = [
+    'question',
+    'hint',
+    'answer',
+    'creator',
+    'category',
+    'result',
+    'edit',
+    'delete',
+  ];
   dataSource: MatTableDataSource<Entry>;
 
   newEntry = {
@@ -34,7 +43,8 @@ export class EntryComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private dialog: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +61,9 @@ export class EntryComponent implements OnInit {
       if (headerId === 'creator') {
         return this.users[data.creatorId].name.toLocaleLowerCase().trim();
       } else if (headerId === 'category') {
-        return data.categoryId ? this.categories[data.categoryId].name.toLocaleLowerCase().trim() : "";
+        return data.categoryId
+          ? this.categories[data.categoryId].name.toLocaleLowerCase().trim()
+          : '';
       }
       return data[headerId];
     };
@@ -75,6 +87,41 @@ export class EntryComponent implements OnInit {
       (err) => {
         // TODO: Show Error
         this.saveInProgress = false;
+        console.error(err);
+      }
+    );
+  }
+
+  editEntry(id: number): void {
+    this.dialog
+      .editEntry(id)
+      .afterClosed()
+      .subscribe(
+        (entry) => {
+          if (entry) {
+            this.sessionService.addEntry(entry);
+            this.entries = this.sessionService.getEntries();
+            this.dataSource.data = this.entries;
+            this.table.renderRows();
+          }
+        },
+        (err) => {
+          // TODO: Show Error
+          console.error(err);
+        }
+      );
+  }
+
+  deleteEntry(id: number): void {
+    this.http.delete(`entry/${id}`, {}).subscribe(
+      () => {
+        this.sessionService.removeEntry(id);
+        this.entries = this.sessionService.getEntries();
+        this.dataSource.data = this.entries;
+        this.table.renderRows();
+      },
+      (err) => {
+        // TODO: Show Error
         console.error(err);
       }
     );

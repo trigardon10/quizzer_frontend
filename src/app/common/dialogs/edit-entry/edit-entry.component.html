@@ -1,0 +1,34 @@
+<div>
+  <mat-form-field>
+    <mat-label>Frage</mat-label>
+    <input matInput [(ngModel)]="entry.question" [disabled]="saveInProgress" />
+  </mat-form-field>
+  <div>
+    <mat-form-field>
+      <mat-label>Hinweis</mat-label>
+      <input matInput [(ngModel)]="entry.hint" [disabled]="saveInProgress" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Antwort</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="entry.answer"
+        [disabled]="saveInProgress"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <button
+    mat-button
+    (click)="saveEntry()"
+    [disabled]="
+      !entry.question || !entry.hint || !entry.answer || saveInProgress
+    "
+  >
+    Speichern
+  </button>
+  <button mat-button (click)="close()" [disabled]="saveInProgress">
+    Abbrechen
+  </button>
+</div>
