@@ -7,11 +7,28 @@ import { DialogService } from '../common/dialog.service';
 import { User } from '../user/entity/User';
 import { Entry } from './entities/Entry';
 import { Category } from './entities/Category';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-entry',
   templateUrl: './entry.component.html',
   styleUrls: ['./entry.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class EntryComponent implements OnInit, AfterViewInit {
   saveInProgress = false;
@@ -22,8 +39,6 @@ export class EntryComponent implements OnInit, AfterViewInit {
   currentUser: User;
   displayedColumns: string[] = [
     'question',
-    'hint',
-    'answer',
     'creator',
     'category',
     'result',
@@ -31,6 +46,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
     'delete',
   ];
   dataSource: MatTableDataSource<Entry>;
+  expandedElement: any = null;
 
   newEntry = {
     question: '',
@@ -125,5 +141,24 @@ export class EntryComponent implements OnInit, AfterViewInit {
         console.error(err);
       }
     );
+  }
+
+  editCategories(): void {
+    this.dialog
+      .editCategories()
+      .afterClosed()
+      .subscribe(
+        (entry) => {
+          if (entry) {
+            this.entries = this.sessionService.getEntries();
+            this.dataSource.data = this.entries;
+            this.table.renderRows();
+          }
+        },
+        (err) => {
+          // TODO: Show Error
+          console.error(err);
+        }
+      );
   }
 }

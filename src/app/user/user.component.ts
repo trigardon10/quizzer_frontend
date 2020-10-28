@@ -24,7 +24,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   users: User[];
   currentUser: User;
-  displayedColumns: string[] = ['name', 'role', 'delete'];
+  displayedColumns: string[] = ['name', 'role'];
   dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -37,6 +37,9 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.currentUser = this.sessionService.getCurrentUser();
+    if (this.currentUser.role === USERROLE.ADMIN) {
+      this.displayedColumns = ['name', 'role', 'delete'];
+    }
     this.users = this.sessionService.getUsers();
     this.dataSource = new MatTableDataSource(this.users);
   }

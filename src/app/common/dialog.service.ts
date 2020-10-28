@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { EditCategoriesComponent } from './dialogs/edit-categories/edit-categories.component';
 import { EditEntryComponent } from './dialogs/edit-entry/edit-entry.component';
-import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,5 +11,9 @@ export class DialogService {
 
   editEntry(id: number): MatDialogRef<EditEntryComponent> {
     return this.d.open(EditEntryComponent, { data: id });
+  }
+
+  editCategories(): MatDialogRef<EditCategoriesComponent> {
+    return this.d.open(EditCategoriesComponent);
   }
 }

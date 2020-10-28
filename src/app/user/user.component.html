@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z2">
+<mat-card class="mat-elevation-z2" *ngIf="currentUser.role === roles.ADMIN">
   <div>
     <h2>Neuen Benutzer anlegen</h2>
     <mat-form-field>

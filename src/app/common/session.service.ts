@@ -52,6 +52,22 @@ export class SessionService {
     return [];
   }
 
+  getCategory(id: number): Category {
+    if (this.appData?.categories) {
+      return this.appData?.categories[id];
+    }
+    console.warn('no categorydata found!');
+    return null;
+  }
+
+  getCategories(): Category[] {
+    if (this.appData?.categories) {
+      return Object.values(this.appData?.categories);
+    }
+    console.warn('no categorydata found!');
+    return [];
+  }
+
   getCategoriesAsMap(): Record<number, Category> {
     return this.appData?.categories || {};
   }
@@ -79,6 +95,14 @@ export class SessionService {
 
   removeEntry(id: number): void {
     delete this.appData.entries[id];
+  }
+
+  addCategory(category: Category): void {
+    this.appData.categories[category.id] = category;
+  }
+
+  removeCategory(id: number): void {
+    delete this.appData.categories[id];
   }
 
   getEntriesForQuiz(amount: number): Entry[] {

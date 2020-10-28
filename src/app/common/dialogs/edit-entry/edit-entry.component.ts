@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Category } from 'src/app/entry/entities/Category';
 import { Entry } from 'src/app/entry/entities/Entry';
 import { HttpService } from '../../http.service';
 import { SessionService } from '../../session.service';
@@ -13,6 +14,9 @@ export class EditEntryComponent implements OnInit {
   entry: Entry;
 
   saveInProgress = false;
+  categories: Category[];
+
+  category: Category;
 
   constructor(
     private dialogRef: MatDialogRef<EditEntryComponent>,
@@ -25,8 +29,17 @@ export class EditEntryComponent implements OnInit {
     this.entry = { ...this.session.getEntry(this.id) };
     delete this.entry.id;
     delete this.entry.creatorId;
-    delete this.entry.categoryId;
     delete this.entry.result;
+    this.categories = this.session.getCategories();
+    this.category =
+      typeof this.entry.categoryId === 'number'
+        ? this.session.getCategory(this.entry.categoryId)
+        : null;
+  }
+
+  catChange(category: Category): void {
+    this.category = category;
+    this.entry.categoryId = category ? category.id : null;
   }
 
   saveEntry(): void {

@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditEntryComponent } from './common/dialogs/edit-entry/edit-entry.component';
+import { EditCategoriesComponent } from './common/dialogs/edit-categories/edit-categories.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { EditEntryComponent } from './common/dialogs/edit-entry/edit-entry.compo
     LoginComponent,
     FrameComponent,
     EditEntryComponent,
+    EditCategoriesComponent,
   ],
   imports: [
     BrowserModule,
